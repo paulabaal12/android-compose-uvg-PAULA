@@ -1,11 +1,13 @@
-package com.zezzi.eventzezziapp.navigation
-
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.zezzi.eventzezziapp.ui.meals.view.MealsCategoriesScreen
+import com.zezzi.eventzezziapp.navigation.NavigationState
+
+
 
 @Composable
 fun Navigation(modifier: Modifier = Modifier) {
@@ -16,7 +18,8 @@ fun Navigation(modifier: Modifier = Modifier) {
         modifier = modifier
     ) {
         composable(route = NavigationState.Meals.route) {
-            MealsCategoriesScreen(navController)
+            MealsCategoriesScreen(navController = navController, viewModel = viewModel())
+
+            }
         }
     }
-}

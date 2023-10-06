@@ -2,7 +2,11 @@ package com.zezzi.eventzezziapp.data.networking.response
 
 import com.google.gson.annotations.SerializedName
 
-data class MealsCategoriesResponse(val categories: List<MealResponse>)
+data class MealsCategoriesResponse(val categories: List<MealResponse>) {
+
+    val isSuccessful: Boolean
+        get() = !categories.isNullOrEmpty()
+}
 
 data class MealResponse(
     @SerializedName("idCategory") val id: String,
