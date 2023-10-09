@@ -65,6 +65,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation ("androidx.compose.ui:ui-graphics:1.3.3")
+    implementation ("io.coil-kt:coil-compose:1.4.0")
 
     // RETROFIT
     implementation("com.google.code.gson:gson:2.9.0")
