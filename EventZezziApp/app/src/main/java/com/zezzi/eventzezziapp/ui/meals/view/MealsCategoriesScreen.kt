@@ -36,6 +36,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
@@ -112,15 +113,12 @@ fun MealsCategoriesScreen(
                                     .padding(top = 8.dp)
                                 //.align(Alignment.Center)
                             )
+                            Divider(
+                                color = Color.Gray,
+                            )
                             Text(
-                                text = meal.description,
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 10.sp
-                                ),
-                                modifier = Modifier
-                                    .padding(top = 8.dp)
-                                //.align(Alignment.Center)
+                                text = "Date: 10 Month 9 day",
+                                style = TextStyle(fontSize = 16.sp)
                             )
                         }
                     }
