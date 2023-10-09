@@ -96,7 +96,7 @@ fun MealsCategoriesScreen(
                                 text = "Category Name",
                                 style = TextStyle(
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 22.sp
+                                    fontSize = 20.sp
                                 ),
                                 modifier = Modifier
                                     .padding(top = 8.dp)
