@@ -9,6 +9,7 @@ class MealsCategoriesViewModel(private val repository: MealsRepository = MealsRe
     suspend fun getMeals(): MealsCategoriesResponse? {
         return repository.getMeals()
     }
+
     suspend fun getMealsByCategory(category: String): MealsByCategoryResponse? {
         return repository.getMealsByCategory(category)
     }

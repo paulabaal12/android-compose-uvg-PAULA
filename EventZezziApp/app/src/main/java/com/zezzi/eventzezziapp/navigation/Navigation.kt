@@ -10,23 +10,18 @@ import androidx.navigation.navArgument
 import com.zezzi.eventzezziapp.navigation.NavigationState
 
 
-
 @Composable
-fun AppNavigation() {
+fun Navigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
+    val viewModel = MealsCategoriesViewModel() // Inicializa el ViewModel aquí
 
-    NavHost(navController = navController, startDestination = "mealsCategories") {
-        composable("mealsCategories") {
-            MealsCategoriesScreen(navController = navController)
-        }
-        composable(
-            "mealDetails/{mealId}",
-            arguments = listOf(navArgument("mealId") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val mealId = backStackEntry.arguments?.getString("mealId")
-            mealId?.let { id ->
-                MealDetailsScreen(navController = navController, mealId = id)
-            }
+    NavHost(
+        navController = navController,
+        startDestination = NavigationState.Meals.route,
+        modifier = modifier
+    ) {
+        composable(route = NavigationState.Meals.route) {
+            MealsCategoriesScreen(navController = navController, viewModel = viewModel)
         }
     }
 }

@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import com.zezzi.eventzezziapp.navigation.NavigationState
 
@@ -67,21 +68,15 @@ fun MealsCategoriesScreen(
                 contentPadding = it
             ) {
                 items(rememberedMeals) { meal ->
-                    Box(
+                    // Display the meal item using Compose components
+                    Card(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                            .background(Color(0xFFFBFBEC))
-                            .clickable {
-                                navController.navigate(
-                                    "${NavigationState.Meals.route}/${meal.id}"
-                                )
-                            }
+                            .padding(8.dp)
+                            .clickable { /* Handle meal item click */ },
+                        elevation = 4.dp
                     ) {
                         Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp)
+                            modifier = Modifier.padding(16.dp)
                         ) {
                             Image(
                                 painter = rememberImagePainter(data = meal.imageUrl),
@@ -90,23 +85,24 @@ fun MealsCategoriesScreen(
                                     .fillMaxWidth()
                                     .aspectRatio(1f)
                             )
+                            Spacer(modifier = Modifier.height(16.dp))
                             Text(
                                 text = meal.name,
                                 style = TextStyle(
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 22.sp
-                                ),
-                                modifier = Modifier
-                                    .padding(top = 8.dp)
+                                    fontSize = 18.sp
+                                )
                             )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = meal.description)
                         }
                     }
                 }
             }
-
             if (isLoading.value) {
                 CircularProgressIndicator()
             }
         }
     }
 }
+
