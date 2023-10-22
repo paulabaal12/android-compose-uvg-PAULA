@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.zezzi.eventzezziapp.navigation.NavigationState
-import com.zezzi.eventzezziapp.ui.meals.view.MealDetailsScreen
+
 
 
 @Composable
