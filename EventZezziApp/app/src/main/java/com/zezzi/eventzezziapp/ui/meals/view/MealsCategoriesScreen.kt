@@ -26,17 +26,23 @@ import kotlinx.coroutines.launch
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material3.Divider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
@@ -45,63 +51,65 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-@SuppressLint("CoroutineCreationDuringComposition")
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.CircularProgressIndicator
+import com.zezzi.eventzezziapp.navigation.NavigationState
+import com.zezzi.eventzezziapp.ui.meals.view.MealDetailsViewModel
+
 @OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun MealsCategoriesScreen(
     navController: NavController,
     viewModel: MealsCategoriesViewModel = MealsCategoriesViewModel()
 ) {
     val rememberedMeals = remember { mutableStateListOf<MealResponse>() }
+    val isLoading = remember { mutableStateOf(false) }
 
-    val coroutineScope = rememberCoroutineScope()
-
-    // Utiliza Coroutines para obtener los datos
-    coroutineScope.launch {
+    LaunchedEffect(Unit) {
+        isLoading.value = true
         val response = viewModel.getMeals()
         val mealsFromTheApi = response?.categories
         rememberedMeals.addAll(mealsFromTheApi.orEmpty())
+        isLoading.value = false
     }
 
     Scaffold(
         topBar = {
-            AppBar(title = "Categories", navController = navController)
+            AppBar(title = "Categorías", navController = navController)
         }
     ) {
-        LazyColumn(contentPadding = it) {
-            items(rememberedMeals) { meal ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .background(Color(0xFFFBFBEC))
-                ) {
-                    Row(
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                contentPadding = it
+            ) {
+                items(rememberedMeals) { meal ->
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp)
+                            .background(Color(0xFFFBFBEC))
+                            .clickable {
+                                navController.navigate(
+                                    "${NavigationState.Meals.route}/${meal.id}"
+                                )
+                            }
                     ) {
-                        Image(
-                            painter = rememberImagePainter(data = meal.imageUrl),
-                            contentDescription = meal.name,
-                            modifier = Modifier
-                                .size(120.dp)
-                        )
-
                         Column(
                             modifier = Modifier
-                                .padding(start = 16.dp)
-                                .align(Alignment.CenterVertically)
+                                .fillMaxWidth()
+                                .padding(16.dp)
                         ) {
-                            Text(
-                                text = "Category Name",
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 20.sp
-                                ),
+                            Image(
+                                painter = rememberImagePainter(data = meal.imageUrl),
+                                contentDescription = meal.name,
                                 modifier = Modifier
-                                    .padding(top = 8.dp)
-                                //.align(Alignment.Center)
+                                    .fillMaxWidth()
+                                    .aspectRatio(1f)
                             )
                             Text(
                                 text = meal.name,
@@ -111,18 +119,14 @@ fun MealsCategoriesScreen(
                                 ),
                                 modifier = Modifier
                                     .padding(top = 8.dp)
-                                //.align(Alignment.Center)
-                            )
-                            Divider(
-                                color = Color.Gray,
-                            )
-                            Text(
-                                text = "Date: 10 Month 9 day",
-                                style = TextStyle(fontSize = 16.sp)
                             )
                         }
                     }
                 }
+            }
+
+            if (isLoading.value) {
+                CircularProgressIndicator()
             }
         }
     }
