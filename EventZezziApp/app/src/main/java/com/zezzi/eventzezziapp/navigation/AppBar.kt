@@ -1,5 +1,6 @@
 package com.zezzi.eventzezziapp.navigation
 
+import android.annotation.SuppressLint
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -12,22 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 
-@ExperimentalMaterial3Api
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AppBar(title: String, navController: NavController) {
-    TopAppBar(
-        title = {
-            Text(text = title, color = Color.White)
-        },
-        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color(0xFF6650a4)),
-        navigationIcon = {
-            if (navController.previousBackStackEntry != null) {
-                IconButton(onClick = { navController.navigateUp() }) {
-                    Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null)
-                }
-            } else {
-                null
-            }
+    TopAppBar(title = { Text(title) }, navigationIcon = {
+        IconButton(onClick = { navController.popBackStack() }) {
+            Icon(Icons.Default.ArrowBack, contentDescription = "Back")
         }
-    )
+    })
 }

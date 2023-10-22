@@ -7,7 +7,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MealsWebService {
-
     private val api: MealsApi
 
     init {
@@ -19,9 +18,10 @@ class MealsWebService {
         api = retrofit.create(MealsApi::class.java)
     }
 
-    suspend fun getMeals(): MealsCategoriesResponse {
-        return api.getMeals()
+    suspend fun getCategories(): MealsCategoriesResponse {
+        return api.getCategories()
     }
+
     suspend fun getMealsByCategory(category: String): MealsByCategoryResponse {
         return api.getMealsByCategory(category)
     }
@@ -29,5 +29,4 @@ class MealsWebService {
     suspend fun getMealDetails(mealId: String): MealDetailsResponse {
         return api.getMealDetails(mealId)
     }
-
 }

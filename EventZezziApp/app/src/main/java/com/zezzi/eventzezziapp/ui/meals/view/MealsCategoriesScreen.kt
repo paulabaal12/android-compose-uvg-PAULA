@@ -33,76 +33,63 @@ import coil.compose.rememberImagePainter
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
+import com.zezzi.eventzezziapp.data.networking.response.CategoryResponse
 import com.zezzi.eventzezziapp.navigation.NavigationState
+import com.zezzi.eventzezziapp.ui.meals.view.CategoryCard
 
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun MealsCategoriesScreen(
     navController: NavController,
     viewModel: MealsCategoriesViewModel = MealsCategoriesViewModel()
 ) {
+    val rememberedCategories = remember { mutableStateListOf<CategoryResponse>() }
     val rememberedMeals = remember { mutableStateListOf<MealResponse>() }
     val isLoading = remember { mutableStateOf(false) }
     val selectedCategory = remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         isLoading.value = true
-        val response = viewModel.getMealsByCategory(selectedCategory.value)
-        val mealsFromTheApi = response?.meals
-        rememberedMeals.addAll(mealsFromTheApi.orEmpty())
+        val categoriesResponse = viewModel.getCategories()
+        val categories = categoriesResponse?.categories
+        rememberedCategories.addAll(categories.orEmpty())
         isLoading.value = false
+    }
+
+    LaunchedEffect(selectedCategory.value) {
+        val mealsResponse = viewModel.getMealsByCategory(selectedCategory.value)
+        val meals = mealsResponse?.meals
+        rememberedMeals.clear()
+        rememberedMeals.addAll(meals.orEmpty())
     }
 
     Scaffold(
         topBar = {
             AppBar(title = "Categorías", navController = navController)
-        }
+        },
+        contentColor =Color(0xFFF9F97D)
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                contentPadding = it
-            ) {
-                items(rememberedMeals) { meal ->
-                    // Display the meal item using Compose components
-                    Card(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .clickable { /* Handle meal item click */ },
-                        elevation = 4.dp
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(16.dp)
-                        ) {
-                            Image(
-                                painter = rememberImagePainter(data = meal.imageUrl),
-                                contentDescription = meal.name,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(1f)
-                            )
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Text(
-                                text = meal.name,
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp
-                                )
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(text = meal.description)
-                        }
-                    }
-                }
-            }
             if (isLoading.value) {
                 CircularProgressIndicator()
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    contentPadding = it
+                ) {
+                    items(rememberedCategories) { category ->
+                        CategoryCard(
+                            category = category,
+                            onClick = {
+                                selectedCategory.value = category.name
+                            }
+                        )
+                    }
+                }
             }
         }
     }
 }
-

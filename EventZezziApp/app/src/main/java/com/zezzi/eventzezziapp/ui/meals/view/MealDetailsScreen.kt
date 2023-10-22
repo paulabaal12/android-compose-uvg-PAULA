@@ -72,42 +72,15 @@ fun MealDetailsScreen(
                     text = details.name,
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
-                        fontSize = 22.sp
-                    ),
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                Text(
-                    text = "Ingredients:",
-                    style = TextStyle(
-                        fontWeight = FontWeight.Bold,
                         fontSize = 18.sp
-                    ),
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    )
                 )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = details.instructions)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Ingredients:")
                 details.ingredients.forEach { ingredient ->
                     Text(text = "- $ingredient")
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Instructions:",
-                    style = TextStyle(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp
-                    ),
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                Text(text = details.instructions)
-                Spacer(modifier = Modifier.height(16.dp))
-                details.videoUrl?.let { videoUrl ->
-                    Text(
-                        text = "Video:",
-                        style = TextStyle(
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp
-                        ),
-                        modifier = Modifier.padding(bottom = 8.dp)
-                    )
-                    Text(text = videoUrl)
                 }
             }
         }

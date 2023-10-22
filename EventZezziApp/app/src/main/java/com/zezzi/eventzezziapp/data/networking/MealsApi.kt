@@ -8,8 +8,7 @@ import retrofit2.http.Query
 
 interface MealsApi {
     @GET("categories.php")
-    suspend fun getMeals(): MealsCategoriesResponse
-
+    suspend fun getCategories(): MealsCategoriesResponse
 
     @GET("filter.php")
     suspend fun getMealsByCategory(@Query("c") category: String): MealsByCategoryResponse
@@ -17,4 +16,3 @@ interface MealsApi {
     @GET("lookup.php")
     suspend fun getMealDetails(@Query("i") mealId: String): MealDetailsResponse
 }
-

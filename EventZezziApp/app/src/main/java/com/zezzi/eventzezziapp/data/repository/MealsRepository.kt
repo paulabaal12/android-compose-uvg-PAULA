@@ -4,18 +4,16 @@ import com.zezzi.eventzezziapp.data.networking.MealsWebService
 import com.zezzi.eventzezziapp.data.networking.response.MealDetailsResponse
 import com.zezzi.eventzezziapp.data.networking.response.MealsByCategoryResponse
 import com.zezzi.eventzezziapp.data.networking.response.MealsCategoriesResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class MealsRepository(private val webService: MealsWebService = MealsWebService()) {
-
-    suspend fun getMeals(): MealsCategoriesResponse? {
+    suspend fun getCategories(): MealsCategoriesResponse? {
         return try {
-            webService.getMeals()
+            webService.getCategories()
         } catch (e: Exception) {
             null
         }
     }
+
     suspend fun getMealsByCategory(category: String): MealsByCategoryResponse? {
         return try {
             webService.getMealsByCategory(category)
@@ -31,5 +29,4 @@ class MealsRepository(private val webService: MealsWebService = MealsWebService(
             null
         }
     }
-
 }
