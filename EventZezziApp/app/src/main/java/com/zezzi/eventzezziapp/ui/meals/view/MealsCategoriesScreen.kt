@@ -33,10 +33,12 @@ import coil.compose.rememberImagePainter
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
+import com.zezzi.eventzezziapp.data.networking.response.AreaResponse
 import com.zezzi.eventzezziapp.data.networking.response.CategoryResponse
 import com.zezzi.eventzezziapp.navigation.NavigationState
 import com.zezzi.eventzezziapp.ui.meals.view.CategoryCard
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MealsCategoriesScreen(
@@ -44,6 +46,7 @@ fun MealsCategoriesScreen(
     viewModel: MealsCategoriesViewModel = MealsCategoriesViewModel()
 ) {
     val rememberedCategories = remember { mutableStateListOf<CategoryResponse>() }
+    val rememberedAreas = remember { mutableStateListOf<AreaResponse>() }
     val rememberedMeals = remember { mutableStateListOf<MealResponse>() }
     val isLoading = remember { mutableStateOf(false) }
     val selectedCategory = remember { mutableStateOf("") }
@@ -67,7 +70,7 @@ fun MealsCategoriesScreen(
         topBar = {
             AppBar(title = "Categorías", navController = navController)
         },
-        contentColor =Color(0xFFF9F97D)
+        contentColor = Color(0xFFF9F97D)
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -78,7 +81,7 @@ fun MealsCategoriesScreen(
             } else {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
-                    contentPadding = it
+                    contentPadding = PaddingValues(16.dp)
                 ) {
                     items(rememberedCategories) { category ->
                         CategoryCard(

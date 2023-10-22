@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AppBar(title: String, navController: NavController) {
     TopAppBar(title = { Text(title) }, navigationIcon = {

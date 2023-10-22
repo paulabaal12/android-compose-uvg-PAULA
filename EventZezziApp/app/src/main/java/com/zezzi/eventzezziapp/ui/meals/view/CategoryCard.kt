@@ -35,11 +35,6 @@ fun CategoryCard(
                     fontSize = 18.sp
                 )
             )
-            Image(painter = category.imageUrl, contentDescription =null )
         }
     }
-}
-
-fun Image(painter: String, contentDescription: Nothing?) {
-
 }

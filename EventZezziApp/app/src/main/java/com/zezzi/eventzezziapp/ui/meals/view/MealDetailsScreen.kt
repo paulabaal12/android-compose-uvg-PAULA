@@ -35,6 +35,7 @@ import com.zezzi.eventzezziapp.navigation.AppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
+
 fun MealDetailsScreen(
     navController: NavController,
     viewModel: MealsCategoriesViewModel = MealsCategoriesViewModel(),
@@ -48,15 +49,10 @@ fun MealDetailsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Meal Details") }, navigationIcon = {
-                IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                }
-            })
+            AppBar(title = "Meal Details", navController = navController)
         }
     ) {
         mealDetails.value?.let { details ->
-            // Display the meal details using Compose components
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {

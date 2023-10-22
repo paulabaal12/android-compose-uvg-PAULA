@@ -2,6 +2,6 @@ package com.zezzi.eventzezziapp.data.networking.response
 
 import com.google.gson.annotations.SerializedName
 
-data class CategoryResponse(
-    @SerializedName("strCategory") val name: String
+data class AreaResponse(
+    @SerializedName("strArea") val name: String
 )
