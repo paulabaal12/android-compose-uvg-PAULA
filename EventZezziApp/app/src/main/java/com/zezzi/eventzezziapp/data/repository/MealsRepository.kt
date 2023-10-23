@@ -2,6 +2,7 @@ package com.zezzi.eventzezziapp.data.repository
 
 import com.zezzi.eventzezziapp.data.networking.MealsWebService
 import com.zezzi.eventzezziapp.data.networking.response.MealsCategoriesResponse
+import com.zezzi.eventzezziapp.data.networking.response.Responsesss
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -14,4 +15,13 @@ class MealsRepository(private val webService: MealsWebService = MealsWebService(
             null
         }
     }
+
+    suspend fun getFilter(category: String): Responsesss? {
+        return try {
+            webService.getFilter(category)
+        } catch (e: Exception) {
+            null
+        }
+    }
 }
+

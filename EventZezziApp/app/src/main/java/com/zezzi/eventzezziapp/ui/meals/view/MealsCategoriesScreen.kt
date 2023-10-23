@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,7 +52,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-@SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter")
+import com.zezzi.eventzezziapp.navigation.NavigationState
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MealsCategoriesScreen(
@@ -59,7 +62,6 @@ fun MealsCategoriesScreen(
     viewModel: MealsCategoriesViewModel = MealsCategoriesViewModel()
 ) {
     val rememberedMeals = remember { mutableStateListOf<MealResponse>() }
-
     val coroutineScope = rememberCoroutineScope()
 
     coroutineScope.launch {
@@ -81,6 +83,9 @@ fun MealsCategoriesScreen(
                         .padding(16.dp)
                         .background(Color(0xFFFBFBEC))
                         .aspectRatio(1f)
+                        .clickable {
+                            navController.navigate("${NavigationState.FilteredMeals.route}/{category}")
+                        }
                 ) {
                     Column(
                         modifier = Modifier
