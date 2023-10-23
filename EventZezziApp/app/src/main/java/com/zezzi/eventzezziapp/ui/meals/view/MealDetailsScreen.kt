@@ -32,10 +32,9 @@ import coil.compose.rememberImagePainter
 import com.zezzi.eventzezziapp.data.networking.response.MealDetailsResponse
 import com.zezzi.eventzezziapp.navigation.AppBar
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-
 fun MealDetailsScreen(
     navController: NavController,
     viewModel: MealsCategoriesViewModel = MealsCategoriesViewModel(),

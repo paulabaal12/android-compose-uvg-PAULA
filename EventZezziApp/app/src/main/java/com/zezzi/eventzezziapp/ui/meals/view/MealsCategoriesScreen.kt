@@ -46,7 +46,6 @@ fun MealsCategoriesScreen(
     viewModel: MealsCategoriesViewModel = MealsCategoriesViewModel()
 ) {
     val rememberedCategories = remember { mutableStateListOf<CategoryResponse>() }
-    val rememberedAreas = remember { mutableStateListOf<AreaResponse>() }
     val rememberedMeals = remember { mutableStateListOf<MealResponse>() }
     val isLoading = remember { mutableStateOf(false) }
     val selectedCategory = remember { mutableStateOf("") }
