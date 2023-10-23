@@ -26,13 +26,19 @@ import kotlinx.coroutines.launch
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -45,7 +51,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-@SuppressLint("CoroutineCreationDuringComposition")
+@SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MealsCategoriesScreen(
@@ -56,7 +62,6 @@ fun MealsCategoriesScreen(
 
     val coroutineScope = rememberCoroutineScope()
 
-    // Utiliza Coroutines para obtener los datos
     coroutineScope.launch {
         val response = viewModel.getMeals()
         val mealsFromTheApi = response?.categories
@@ -68,59 +73,35 @@ fun MealsCategoriesScreen(
             AppBar(title = "Categories", navController = navController)
         }
     ) {
-        LazyColumn(contentPadding = it) {
+        LazyVerticalGrid(columns = GridCells.Fixed(2)) {
             items(rememberedMeals) { meal ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                         .background(Color(0xFFFBFBEC))
+                        .aspectRatio(1f)
                 ) {
-                    Row(
+                    Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        Text(
+                            text = meal.name,
+                            style = TextStyle(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 22.sp
+                            ),
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
                         Image(
                             painter = rememberImagePainter(data = meal.imageUrl),
                             contentDescription = meal.name,
-                            modifier = Modifier
-                                .size(120.dp)
+                            modifier = Modifier.size(120.dp)
                         )
-
-                        Column(
-                            modifier = Modifier
-                                .padding(start = 16.dp)
-                                .align(Alignment.CenterVertically)
-                        ) {
-                            Text(
-                                text = "Category Name",
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 20.sp
-                                ),
-                                modifier = Modifier
-                                    .padding(top = 8.dp)
-                                //.align(Alignment.Center)
-                            )
-                            Text(
-                                text = meal.name,
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 22.sp
-                                ),
-                                modifier = Modifier
-                                    .padding(top = 8.dp)
-                                //.align(Alignment.Center)
-                            )
-                            Divider(
-                                color = Color.Gray,
-                            )
-                            Text(
-                                text = "Date: 10 Month 9 day",
-                                style = TextStyle(fontSize = 16.sp)
-                            )
-                        }
                     }
                 }
             }
