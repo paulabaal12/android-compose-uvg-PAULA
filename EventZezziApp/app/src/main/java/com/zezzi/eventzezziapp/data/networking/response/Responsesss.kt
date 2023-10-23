@@ -1,7 +1,7 @@
 package com.zezzi.eventzezziapp.data.networking.response
 import com.google.gson.annotations.SerializedName
 
-data class Responsesss(val meals: List<MealResponse>) {
+data class Responsesss(val meals: List<Meal>) {
 
 }
 
