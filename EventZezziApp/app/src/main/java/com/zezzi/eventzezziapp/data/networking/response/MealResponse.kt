@@ -4,8 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class MealsCategoriesResponse(val categories: List<MealResponse>) {
 
-    val isSuccessful: Boolean
-        get() = !categories.isNullOrEmpty()
+
 }
 
 data class MealResponse(

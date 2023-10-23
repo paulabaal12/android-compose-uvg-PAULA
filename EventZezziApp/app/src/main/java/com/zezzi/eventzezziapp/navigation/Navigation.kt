@@ -12,21 +12,27 @@ import com.zezzi.eventzezziapp.ui.meals.view.FilteredMealsScreen
 @Composable
 fun Navigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
+
     NavHost(
         navController = navController,
         startDestination = NavigationState.Meals.route,
         modifier = modifier
     ) {
         composable(route = NavigationState.Meals.route) {
-            MealsCategoriesScreen(navController = navController, viewModel = viewModel())
+            MealsCategoriesScreen(navController)
         }
+
         composable(
-            route = "${NavigationState.FilteredMeals.route}/{category}",
+            route = "comida/{category}",
             arguments = listOf(navArgument("category") { type = NavType.StringType })
         ) { backStackEntry ->
             val category = backStackEntry.arguments?.getString("category")
             if (category != null) {
-                FilteredMealsScreen(navController = navController, category = category, viewModel = viewModel())
+                FilteredMealsScreen(
+                    navController = navController,
+                    category = category,
+                    viewModel = viewModel()
+                )
             }
         }
     }

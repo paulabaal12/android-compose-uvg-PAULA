@@ -29,6 +29,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -37,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.zezzi.eventzezziapp.navigation.NavigationState
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MealsCategoriesScreen(
@@ -45,12 +46,13 @@ fun MealsCategoriesScreen(
     viewModel: MealsCategoriesViewModel = MealsCategoriesViewModel()
 ) {
     val rememberedMeals = remember { mutableStateListOf<MealResponse>() }
-    val coroutineScope = rememberCoroutineScope()
     val isLoading = remember { mutableStateOf(true) }
 
-    coroutineScope.launch {
+    LaunchedEffect(Unit) {
+        isLoading.value = true
         val response = viewModel.getMeals()
         val mealsFromTheApi = response?.categories
+        rememberedMeals.clear()
         rememberedMeals.addAll(mealsFromTheApi.orEmpty())
         isLoading.value = false
     }
@@ -77,7 +79,7 @@ fun MealsCategoriesScreen(
                             .background(Color(0xFFFBFBEC))
                             .aspectRatio(1f)
                             .clickable {
-                                navController.navigate("${NavigationState.FilteredMeals.route}/{category}")
+                                navController.navigate("comida/${meal.name}")
                             }
                     ) {
                         Column(

@@ -82,7 +82,7 @@ fun FilteredMealsScreen(
                             .background(Color(0xFFFBFBEC))
                             .aspectRatio(1f)
                             .clickable {
-                                navController.navigate("${NavigationState.FilteredMeals.route}/$category")
+                                navController.navigate("comida/${meal.name}")
                             }
                     ) {
                         Column(
@@ -99,6 +99,11 @@ fun FilteredMealsScreen(
                                     fontSize = 22.sp
                                 ),
                                 modifier = Modifier.padding(top = 8.dp)
+                            )
+                            Image(
+                                painter = rememberImagePainter(data = meal.imageUrl),
+                                contentDescription = meal.name,
+                                modifier = Modifier.size(120.dp)
                             )
                         }
                     }
